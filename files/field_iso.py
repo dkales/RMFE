@@ -13,48 +13,48 @@ import sys
 
 
 def field_iso_desc(m,instance):
-	g=instance.g
-	c=instance.c
-	P=instance.P
-	hR=instance.hR
-	p=instance.isopol
-  	R=instance.R	
-	
+    g=instance.g
+    c=instance.c
+    P=instance.P
+    hR=instance.hR
+    p=instance.isopol
+    R=instance.R	
+    
 #Computing CRT-preimage q of (m,0,0,...,0)
-	q=xgcd(p,g)[_sage_const_1 ]*p*m
-	
+    q=xgcd(p,g)[_sage_const_1 ]*p*m
+    
 #Computing result as sum of Frobenius-conjugates mod h (i.e. coefficients of q are mapped to their trace)		                                                      
-	r=q.map_coefficients(lambda z:z.trace())  				 
-	s=r.mod(hR)
-	t=P(s)                                           
-	return t(c)
+    r=q.map_coefficients(lambda z:z.trace())  				 
+    s=r.mod(hR)
+    t=P(s)                                           
+    return t(c)
 
 
 #field_iso_asc is the inverse of the function above, which is simply defined as u mod g, when u (originally an element of H, and hence representable as a polynomial in F_2[X]) is seen as a polynomial in F[Y].
 def field_iso_asc(u,instance):
-	return instance.R(u.polynomial(instance.Y)).mod(instance.g)
+    return instance.R(u.polynomial(instance.Y)).mod(instance.g)
 
 
 ############UNUSED
 #Alternative to field_iso_desc, seems slower 
 def field_iso_desc_other(m,instance):
-	X=instance.X
-	g=instance.g
-	c=instance.c
-	P=instance.P
-	hR=instance.hR
-	p=instance.isopol
-  	R=instance.R
-	e1=instance.e1	
+    X=instance.X
+    g=instance.g
+    c=instance.c
+    P=instance.P
+    hR=instance.hR
+    p=instance.isopol
+    R=instance.R
+    e1=instance.e1	
 
 
-	Moduli=[g.map_coefficients(lambda z:z.frobenius(i)) for i in range(e1)]
-	q=CRT([m]+[R(_sage_const_0 )]*(e1-_sage_const_1 ), Moduli)	
-	
+    Moduli=[g.map_coefficients(lambda z:z.frobenius(i)) for i in range(e1)]
+    q=CRT([m]+[R(_sage_const_0 )]*(e1-_sage_const_1 ), Moduli)	
+    
 #Computing result as sum of Frobenius-conjugates mod h (i.e. coefficients of q are mapped to their trace)		                                                      
-	r=q.map_coefficients(lambda z:z.trace())  				 
-	s=r.mod(hR)
-	t=P(s.change_variable_name(X))                                           
-	return t(c)
+    r=q.map_coefficients(lambda z:z.trace())  				 
+    s=r.mod(hR)
+    t=P(s.change_variable_name(X))                                           
+    return t(c)
 
 

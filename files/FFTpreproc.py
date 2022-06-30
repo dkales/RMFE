@@ -13,15 +13,15 @@ def FFTpreproc(m,B):
     C=B[:]
     for level in range(_sage_const_0 ,m-_sage_const_1 ):
         cc=C[-_sage_const_1 ]**(-_sage_const_1 )
-	Binv.append(cc)
-	G=[cc*C[j] for j in range(m-level-_sage_const_1 )]
-	D=[G[j]**_sage_const_2 -G[j] for j in range(m-level-_sage_const_1 )]
+    Binv.append(cc)
+    G=[cc*C[j] for j in range(m-level-_sage_const_1 )]
+    D=[G[j]**_sage_const_2 -G[j] for j in range(m-level-_sage_const_1 )]
                                                                        
-        G1=G[:]
-        D1=D[:] 
-        datacurrent=[G1,D1]
-        data.append(datacurrent)
-        C=D
+    G1=G[:]
+    D1=D[:] 
+    datacurrent=[G1,D1]
+    data.append(datacurrent)
+    C=D
     data.append(Binv)         
     return data
 

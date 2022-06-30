@@ -17,82 +17,82 @@ from polyintereval import *
 #phi_first: phi-map of (k1,e1)_2-RMFE
 
 def phi_first(v,instance):
-	a=instance.a
-	if instance.k1==2: 	 
-  		return v[0]+(v[0]+v[1])*a
-	elif instance.k1==3:
-		return v[0]+(-v[0]+v[1]-v[2])*a+v[2]*a^2
+    a=instance.a
+    if instance.k1==2: 	 
+          return v[0]+(v[0]+v[1])*a
+    elif instance.k1==3:
+        return v[0]+(-v[0]+v[1]-v[2])*a+v[2]*a^2
 
 #psi_first: psi-map of (k1,e1)_2-RMFE
 
 def psi_first(d,instance):
-	P=instance.P
-	X=instance.X
-	if d!=0:
-		p=d.polynomial(X)
-		r=[p(0),p(1)]
-		if instance.k1==3:
-			r.append(p[4])
-		return r		
-	else:
-		return ([0]*instance.k1)
+    P=instance.P
+    X=instance.X
+    if d!=0:
+        p=d.polynomial(X)
+        r=[p(0),p(1)]
+        if instance.k1==3:
+            r.append(p[4])
+        return r		
+    else:
+        return ([0]*instance.k1)
 
 
 
 #phi_RMFE_exact: Phi map for (k,e)_2-RMFE when input is of size exactly k
 
 def phi_RMFE_exact(v,instance): 
-	k1=instance.k1
-	k2=instance.k2
-	e1=instance.e1
-	e2=instance.e2
-	k=instance.k
-	e=instance.e
-	m1=instance.m1
-	m2=instance.m2
-	F=instance.F
-	a=instance.a
-	H=instance.H
-	c=instance.c
-	P=instance.P
-	X=instance.X
-	R=instance.R
-	Y=instance.Y
-	f=instance.f
-	h=instance.h
-	g=instance.g
+    k1=instance.k1
+    k2=instance.k2
+    e1=instance.e1
+    e2=instance.e2
+    k=instance.k
+    e=instance.e
+    m1=instance.m1
+    m2=instance.m2
+    F=instance.F
+    a=instance.a
+    H=instance.H
+    c=instance.c
+    P=instance.P
+    X=instance.X
+    R=instance.R
+    Y=instance.Y
+    f=instance.f
+    h=instance.h
+    g=instance.g
 
-    	#Split the binary vector in blocks of k1 cordinates, apply (k1,e1)_2-RMFE to each block. 
- 	v1=[]
-   	
-	for i in range(k2):
-		t=phi_first(v[k1*i:k1*i+k1],instance)
-		v1.append(t)            
-   	#Second step, apply (k',e2)_2^e1-RMFE to result v1.
-    	
-    	#Interpolate
-	p=interpol(v1,instance)
-    	    
-    	#Now we have a polynomial in F[X]=F_{2^e1}[X] of degree <=e2. We map this into an element of F_(2^e) via field_iso_desc  (by implicitely first mapping into an element of F_(m1^e2) and then changing to a representation in F_(2^e)).  Recall m1=2^e1
-	r=field_iso_desc(p,instance)
+    #Split the binary vector in blocks of k1 cordinates, apply (k1,e1)_2-RMFE to each block. 
+    v1=[]
+       
+    for i in range(k2):
+        t=phi_first(v[k1*i:k1*i+k1],instance)
+        v1.append(t)            
+       #Second step, apply (k',e2)_2^e1-RMFE to result v1.
         
-    	
-	return r
+        #Interpolate
+    p=interpol(v1,instance)
+            
+        #Now we have a polynomial in F[X]=F_{2^e1}[X] of degree <=e2. We map this into an element of F_(2^e) via field_iso_desc  (by implicitely first mapping into an element of F_(m1^e2) and then changing to a representation in F_(2^e)).  Recall m1=2^e1
+    r=field_iso_desc(p,instance)
+        
+        
+    return r
 
 
 #phi_RMFE: Applies phi-map RMFE to a vector of arbitrary length. Output is *always* a list.
 
 def phi_RMFE(v,instance):
-	k=instance.k
-	w=[]
-	number_blocks=(len(v)-1)//k+1
-	for i in range(number_blocks-1):
-		w.append(v[k*i:k*i+k])
-	w.append(v[k*(number_blocks-1):]+[0]*(k*number_blocks-len(v)))
-	res=map(lambda x:phi_RMFE_exact(x,instance),w)
-	return res
+    k=instance.k
+    w=[]
+    number_blocks=(len(v)-1)//k+1
+    for i in range(number_blocks-1):
+        w.append(v[k*i:k*i+k])
+    w.append(v[k*(number_blocks-1):]+[0]*(k*number_blocks-len(v)))
+    res=map(lambda x:phi_RMFE_exact(x,instance),w)
+    return res
     
-	
+    
 
 
 
@@ -100,75 +100,75 @@ def phi_RMFE(v,instance):
 #psi_RMFE: Psi map for (k,e)_2-RMFE
 
 def psi_RMFE(w,vk,instance):
-	k1=instance.k1
-	k2=instance.k2
-	e1=instance.e1
-	e2=instance.e2
-	k=instance.k
-	e=instance.e
-	m1=instance.m1
-	m2=instance.m2
-	F=instance.F
-	a=instance.a
-	H=instance.H
-	c=instance.c
-	P=instance.P
-	X=instance.X
-	R=instance.R
-	Y=instance.Y
-	f=instance.f
-	h=instance.h
-	g=instance.g
+    k1=instance.k1
+    k2=instance.k2
+    e1=instance.e1
+    e2=instance.e2
+    k=instance.k
+    e=instance.e
+    m1=instance.m1
+    m2=instance.m2
+    F=instance.F
+    a=instance.a
+    H=instance.H
+    c=instance.c
+    P=instance.P
+    X=instance.X
+    R=instance.R
+    Y=instance.Y
+    f=instance.f
+    h=instance.h
+    g=instance.g
     ###print ('lengths', len(w), len(k))
-	if len(w)!=len(vk):
-		raise Exception("inputs to psi_RMFE must be of same length")
-	for i in range(len(vk)): 
-		if vk[i]>k:
-			raise Exception("every coordinate on second input of psi_RMFE need to be at most k")
-	B=[a^i for i in range(e1)]
-	data=FFTpreproc(e1,B)
-    	
-	res=[]
-	for j in range(len(w)):
- 	#First change field representation to represent input as element of F_(m1^e2) and hence as a polynomial in F[X] of degree at most e2. Recall m1=2^e1
-		p=field_iso_asc(w[j],instance)
-		p=list(p)
-    		#print ('After translating to F', p)
-		
-    		#Before applying the FFT we need to a polynomial of degree <=m1. For this we take modulo X^m1+X, as this does not modify evaluation in points of F=F_m1:
-		hredi=listsum(p[0:m1],[0]+p[m1:2*m1-1])
-		hred=listsum(hredi[:],[0]+p[2*m1-1:])
-    		#print ('After reduction', hred)
-		
+    if len(w)!=len(vk):
+        raise Exception("inputs to psi_RMFE must be of same length")
+    for i in range(len(vk)): 
+        if vk[i]>k:
+            raise Exception("every coordinate on second input of psi_RMFE need to be at most k")
+    B=[a^i for i in range(e1)]
+    data=FFTpreproc(e1,B)
+        
+    res=[]
+    for j in range(len(w)):
+     #First change field representation to represent input as element of F_(m1^e2) and hence as a polynomial in F[X] of degree at most e2. Recall m1=2^e1
+        p=field_iso_asc(w[j],instance)
+        p=list(p)
+            #print ('After translating to F', p)
+        
+            #Before applying the FFT we need to a polynomial of degree <=m1. For this we take modulo X^m1+X, as this does not modify evaluation in points of F=F_m1:
+        hredi=listsum(p[0:m1],[0]+p[m1:2*m1-1])
+        hred=listsum(hredi[:],[0]+p[2*m1-1:])
+            #print ('After reduction', hred)
+        
     
-    		#Apply FFT
-		w1=eval(hred,instance)
+            #Apply FFT
+        w1=eval(hred,instance)
     
-        	#print ('After applying FFT we get', w1)
+            #print ('After applying FFT we get', w1)
     
-    		#At this point we have a vector w1 of m1 elements in F and want to apply psi_first to each of these coordinates (obtaining k1 coordinates in F2 at each of these m1). If we apply it directly we get an output of m1*k1 coordinates, buit this may not coincide with vk[j], because: first, the theory also allows to have one more point, the point at infinity so in fact vk[j] may be as large as (m1+1)*k1; second, it also maybe that vk[j]<m1*k1. So based on value of vk, we adjust size of the output. If vk is larger than m1*k1 we need to add the evaluation in the point at infinity. If it is smaller we adjust so that the output will have vk[j] coordinates
+            #At this point we have a vector w1 of m1 elements in F and want to apply psi_first to each of these coordinates (obtaining k1 coordinates in F2 at each of these m1). If we apply it directly we get an output of m1*k1 coordinates, buit this may not coincide with vk[j], because: first, the theory also allows to have one more point, the point at infinity so in fact vk[j] may be as large as (m1+1)*k1; second, it also maybe that vk[j]<m1*k1. So based on value of vk, we adjust size of the output. If vk is larger than m1*k1 we need to add the evaluation in the point at infinity. If it is smaller we adjust so that the output will have vk[j] coordinates
 
-		if vk[j]>m1*k1:
-			if len(p)>2*m1:
-				w1.append(p[2*m1])
-			else:
-				w1=w1+([0]*(vk[j]-len(p)))
-		else:
-			
-			upper=((vk[j]-1)//k1) + 1	
-			del w1[upper:]
-		
-    	###print ('After adjusting we get', w1)
+        if vk[j]>m1*k1:
+            if len(p)>2*m1:
+                w1.append(p[2*m1])
+            else:
+                w1=w1+([0]*(vk[j]-len(p)))
+        else:
+            
+            upper=((vk[j]-1)//k1) + 1	
+            del w1[upper:]
+        
+        ###print ('After adjusting we get', w1)
 
-    	#Apply psi_first to each element of resulting vector.
-		r=[]
-		for i in range(len(w1)):
-			r=r+psi_first(w1[i],instance)
+        #Apply psi_first to each element of resulting vector.
+        r=[]
+        for i in range(len(w1)):
+            r=r+psi_first(w1[i],instance)
     
-    	#Adjust size of output.
-		del r[vk[j]:]
+        #Adjust size of output.
+        del r[vk[j]:]
         #Concatenate this to global vector.
-		res=res+r
-	return res
+        res=res+r
+    return res
 
 

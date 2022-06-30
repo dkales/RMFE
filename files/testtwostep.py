@@ -35,8 +35,9 @@ for i in range(input_length):
 	w.append(GF(_sage_const_2 ).random_element())
         
 #Applying phi(first map from the RMFE) to each vector. 
-f=phi_RMFE(v,instance)
-g=phi_RMFE(w,instance)
+f=list(phi_RMFE(v,instance))
+g=list(phi_RMFE(w,instance))
+print(f,g)
 print ('Initial vector', v, 'is embedded in', f, 'whose elements belong to', (f[_sage_const_0 ]).parent())
 print ('Initial vector', w, 'is embedded in', g, 'whose elements belong to', (g[_sage_const_0 ]).parent())
 h=map(lambda x,y:x*y, f,g)

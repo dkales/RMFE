@@ -9,15 +9,15 @@ import sys
 
 
 def field_iso_desc(m,instance):
-	g=instance.g
-	c=instance.c
-	P=instance.P
-	hR=instance.hR
-	p=instance.isopol
-  	R=instance.R	
+	g=instance.g # factor of hR
+	c=instance.c # generator of F_2[Z]/h, the large binary field
+	P=instance.P # Poly ring F_2[X]
+	hR=instance.hR # irreducible poly h, cast to R, where it is not irreducible
+	p=instance.isopol # hR/g
+  	R=instance.R	 # Poly ring F_q[Y]
 	
 #Computing CRT-preimage q of (m,0,0,...,0)
-	q=xgcd(p,g)[1]*p*m
+	q=xgcd(p,g)[1]*p*m # xgcd(p,g)[1] = inverse of p mod g (if [0] = 1), m = input = element in R, 
 	
 #Computing result as sum of Frobenius-conjugates mod h (i.e. coefficients of q are mapped to their trace)		                                                      
 	r=q.map_coefficients(lambda z:z.trace())  				 
